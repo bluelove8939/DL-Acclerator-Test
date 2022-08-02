@@ -25,7 +25,7 @@ if __name__ == '__main__':
     logpath = args.p
     if logpath == 'auto':
         logpath = os.path.join(os.curdir, 'test_runs',
-                               f'buffersize_test'
+                               f'buffersize_test_'
                                f'{temppath.split(os.sep)[-1].split(".")[0]}_'
                                f'{topology.split(os.sep)[-1].split(".")[0]}')
 
