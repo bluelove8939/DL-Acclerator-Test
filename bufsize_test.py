@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     os.makedirs(logpath, exist_ok=True)
 
-    buffsizes = [2, 8, 32, 128, 512, 2048, 4096, 6144]
+    buffsizes = [16, 32, 64, 128, 512, 2048, 4096, 6144]
 
     for bf in buffsizes:
         config = configparser.ConfigParser()
