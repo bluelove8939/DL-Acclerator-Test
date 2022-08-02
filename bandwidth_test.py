@@ -15,7 +15,7 @@ if __name__ == '__main__':
                         help="Path to the config file"
                         )
     parser.add_argument('-p', metavar='log dir', type=str,
-                        default=os.path.join(os.curdir, 'test_runs', 'bandwidth_test'),
+                        default='auto',
                         help="Path to log dir"
                         )
 
@@ -23,6 +23,8 @@ if __name__ == '__main__':
     topology = args.t
     temppath = args.c
     logpath = args.p
+    if logpath == 'auto':
+        logpath = os.path.join(os.curdir, 'test_runs', f'bandwidth_test_{temppath.split(".")[0]}_{topology.split(".")[0]}')
 
     os.makedirs(logpath, exist_ok=True)
 
