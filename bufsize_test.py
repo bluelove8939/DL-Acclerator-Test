@@ -31,13 +31,15 @@ if __name__ == '__main__':
 
     os.makedirs(logpath, exist_ok=True)
 
-    bandwidths = [1, 2, 4, 8, 16, 32, 64, 128]
+    buffsizes = [2, 8, 32, 128, 512, 2048, 4096, 6144]
 
-    for bw in bandwidths:
+    for bf in buffsizes:
         config = configparser.ConfigParser()
         config.read(temppath)
-        config['general']['run_name'] = '_'.join([config['general']['run_name'], f"bw_{bw}"])
-        config['architecture_presets']['Bandwidth'] = str(bw)
+        config['general']['run_name'] = '_'.join([config['general']['run_name'], f"bf_{bf}"])
+        config['architecture_presets']['IfmapSramSzkB'] = str(bf)
+        config['architecture_presets']['FilterSramSzkB'] = str(bf)
+        config['architecture_presets']['OfmapSramSzkB'] = str(bf)
         config['run_presets']['InterfaceBandwidth'] = 'USER'
         
         config_filepath = os.path.join(os.curdir, 'configs', '.'.join([config['general']['run_name'], 'cfg']))
