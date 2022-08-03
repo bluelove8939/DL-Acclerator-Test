@@ -34,7 +34,6 @@ if __name__ == '__main__':
     buffsizes = [16, 32, 64, 128, 512, 2048, 4096, 6144]
 
     for bf in sorted(buffsizes, reverse=True):
-        print(bf)
         config = configparser.ConfigParser()
         config.read(temppath)
         config['general']['run_name'] = '_'.join([config['general']['run_name'], f"bf_{bf}"])
