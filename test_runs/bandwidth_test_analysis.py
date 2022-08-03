@@ -33,6 +33,7 @@ for bw in bwlist:
 
 
 x_axis = np.arange(len(bwlist))
+print(stall_cycles)
 plt.bar(x_axis, np.array(stall_cycles) / np.array(total_cycles), width=0.2)
 plt.xticks(x_axis, bwlist, rotation=0, ha='center')
 
