@@ -11,7 +11,7 @@ parser.add_argument('-tp', '--topology', default=os.path.join(os.curdir, 'topolo
                     help='Topology file path', dest='topo_path')
 parser.add_argument('-cf', '--configs', default=os.path.join(os.curdir, 'configs', 'google.cfg'), type=str,
                     help='Accelerator configuration file path', dest='cfgs_path')
-parser.add_argument('-cp', '--compression', default=os.path.join(os.curdir, 'compressions', 'compression_test_final_fp32_64B_pr10'), type=str,
+parser.add_argument('-cp', '--compression', default=os.path.join(os.curdir, 'compressions', 'compression_test_final_fp32_64B_pr10.csv'), type=str,
                     help='Compression results file path', dest='comp_path')
 parser.add_argument('-al', '--algorithm', default='BDI', type=str,
                     help='Name of target algorithm', dest='target_algo')
