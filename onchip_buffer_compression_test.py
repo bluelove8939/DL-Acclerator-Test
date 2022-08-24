@@ -30,7 +30,7 @@ if __name__ == '__main__':
     target_model = os.path.split(topo_path)[-1].split('.')[0]
     target_config = os.path.split(cfgs_path)[-1].split('.')[0]
     logdirname = args.logdirname
-    tmp_dirname = os.path.join(os.curdir, 'temporary', f"{target_model}_{target_config}")
+    tmp_dirname = os.path.join(os.curdir, 'temporary', f"{target_model}_{target_config}_{target_algo}")
 
     print("On-Chip Buffer Compression Test Configs")
     print(f"- topology path: {topo_path}")
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     for layer_name in tmp_layer_filepath.keys():
         layer_file = tmp_layer_filepath[layer_name]
         config_file = tmp_config_filepath[layer_name]
-        logdirname_s = os.path.join(logdirname, f"{target_model}_{target_algo}", layer_name)
+        logdirname_s = os.path.join(logdirname, f"{target_model}_{target_config}_{target_algo}", layer_name)
 
         os.makedirs(logdirname_s, exist_ok=True)
 
