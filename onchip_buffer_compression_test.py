@@ -111,8 +111,11 @@ if __name__ == '__main__':
     for layer_name in tmp_layer_filepath.keys():
         layer_file = tmp_layer_filepath[layer_name]
         config_file = tmp_config_filepath[layer_name]
+        logdirname_s = os.path.join(logdirname, f"{target_model}_{target_algo}", layer_name)
+
+        os.makedirs(logdirname_s, exist_ok=True)
 
         s = scalesim(save_disk_space=True, verbose=True,
                      config=config_file,
                      topology=layer_file,)
-        s.run_scale(top_path=os.path.join(logdirname, f"{target_model}_{target_algo}", layer_name))
+        s.run_scale(top_path=logdirname_s)
