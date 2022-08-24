@@ -66,7 +66,7 @@ if __name__ == '__main__':
             with open(tmpfilepath, 'wt') as layer_file:
                 layer_file.write('\n'.join([header, line]))
 
-        print(f"generated temporary layer files at {tmp_dirname}")
+        print(f"generated temporary layer files at {os.path.join(tmp_dirname, 'layers')}")
 
     with open(comp_path, 'rt') as comp_file:
         content = comp_file.readlines()
@@ -106,7 +106,7 @@ if __name__ == '__main__':
                 with open(tmpfilepath, 'wt') as conf_file:
                     config.write(conf_file)
 
-        print("compression ratio extracted")
+        print(f"generated temporary config files at {os.path.join(tmp_dirname, 'configs')}")
 
 
     # 3. Test using compression ratios and layer configurations
