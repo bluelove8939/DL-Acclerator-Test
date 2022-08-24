@@ -3,7 +3,7 @@ import argparse
 import configparser
 import math
 
-# from scalesim.scale_sim import scalesim
+from scalesim.scale_sim import scalesim
 
 
 parser = argparse.ArgumentParser(description='On-Chip Buffer Compression Test Configs')
@@ -19,8 +19,6 @@ parser.add_argument('-md', '--model', default='AlexNet', type=str,
                     help='Name of target model name', dest='target_model')
 parser.add_argument('-ld', '--logdirname', default=os.path.join(os.curdir, 'logs'), type=str,
                     help='Directory of output log files', dest='logdirname')
-parser.add_argument('-lf', '--logfilename', default='compression_test_result.csv', type=str,
-                    help='Name of logfile', dest='logfilename')
 args, _ = parser.parse_known_args()
 
 
@@ -33,7 +31,6 @@ if __name__ == '__main__':
     target_algo = args.target_algo
     target_model = args.target_model
     logdirname = args.logdirname
-    logfilename = args.logfilename
     tmp_dirname = os.path.join(os.curdir, 'temporary', target_model)
 
     print("On-Chip Buffer Compression Test Configs")
@@ -43,7 +40,7 @@ if __name__ == '__main__':
     print(f"- target algorithm: {target_algo}")
     print(f"- target model name: {target_model}")
     print(f"- temporary dirname: {tmp_dirname}")
-    print(f"- logfilepath: {os.path.join(logdirname, logfilename)}\n")
+    print(f"- log directory: {logdirname}\n")
 
 
     # 2. Extract layers and compression ratio of each layer from given files
@@ -111,61 +108,11 @@ if __name__ == '__main__':
 
     # 3. Test using compression ratios and layer configurations
 
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument('-t', metavar='Topology file', type=str,
-    #                     default=os.path.join(os.curdir, 'topologies', 'conv_nets', 'alexnet.csv'),
-    #                     help="Path to the topology file"
-    #                     )
-    # parser.add_argument('-c', metavar='Config file', type=str,
-    #                     default=os.path.join(os.curdir, 'configs', 'google.cfg'),
-    #                     help="Path to the config file"
-    #                     )
-    # parser.add_argument('-p', metavar='log dir', type=str,
-    #                     default='auto',
-    #                     help="Path to log dir"
-    #                     )
-    #
-    # args = parser.parse_args()
-    # topology = args.t
-    # temppath = args.c
-    # logpath = args.p
-    # if logpath == 'auto':
-    #     logpath = os.path.join(os.curdir, 'test_runs',
-    #                            f'compression_test_'
-    #                            f'{temppath.split(os.sep)[-1].split(".")[0]}_'
-    #                            f'{topology.split(os.sep)[-1].split(".")[0]}')
-    #
-    # os.makedirs(logpath, exist_ok=True)
-    #
-    # buffsize = 256
-    #
-    # config = configparser.ConfigParser()
-    # config.read(temppath)
-    # config['general']['run_name'] = '_'.join([config['general']['run_name'], f"bf_{buffsize}"])
-    # config['architecture_presets']['IfmapSramSzkB'] = str(buffsize)
-    # config['architecture_presets']['FilterSramSzkB'] = str(buffsize)
-    # config['architecture_presets']['OfmapSramSzkB'] = str(buffsize)
-    # config['run_presets']['InterfaceBandwidth'] = 'USER'
+    for layer_name in tmp_layer_filepath.keys():
+        layer_file = tmp_layer_filepath[layer_name]
+        config_file = tmp_config_filepath[layer_name]
 
-
-
-    # buffsizes = [16, 32, 64, 256]
-    #
-    # for bf in sorted(buffsizes, reverse=True):
-    #     config = configparser.ConfigParser()
-    #     config.read(temppath)
-    #     config['general']['run_name'] = '_'.join([config['general']['run_name'], f"bf_{bf}"])
-    #     config['architecture_presets']['IfmapSramSzkB'] = str(bf)
-    #     config['architecture_presets']['FilterSramSzkB'] = str(bf)
-    #     config['architecture_presets']['OfmapSramSzkB'] = str(bf)
-    #     config['run_presets']['InterfaceBandwidth'] = 'USER'
-    #
-    #     config_filepath = os.path.join(os.curdir, 'configs', '.'.join([config['general']['run_name'], 'cfg']))
-    #     with open(config_filepath, 'wt') as file:
-    #         config.write(file)
-    #
-    #     s = scalesim(save_disk_space=True, verbose=True,
-    #              config=config_filepath,
-    #              topology=topology,
-    #              )
-    #     s.run_scale(top_path=logpath)
+        s = scalesim(save_disk_space=True, verbose=True,
+                     config=config_file,
+                     topology=layer_file,)
+        s.run_scale(top_path=os.path.join(logdirname, f"{target_model}_{target_algo}", layer_name))
