@@ -118,4 +118,6 @@ if __name__ == '__main__':
         s = scalesim(save_disk_space=True, verbose=True,
                      config=config_file,
                      topology=layer_file,)
+
+        print('\n\n')
         s.run_scale(top_path=logdirname_s)
