@@ -15,8 +15,6 @@ parser.add_argument('-cp', '--compression', default=os.path.join(os.curdir, 'com
                     help='Compression results file path', dest='comp_path')
 parser.add_argument('-al', '--algorithm', default='BDI', type=str,
                     help='Name of target algorithm', dest='target_algo')
-parser.add_argument('-md', '--model', default='AlexNet', type=str,
-                    help='Name of target model name', dest='target_model')
 parser.add_argument('-ld', '--logdirname', default=os.path.join(os.curdir, 'logs'), type=str,
                     help='Directory of output log files', dest='logdirname')
 args, _ = parser.parse_known_args()
@@ -29,9 +27,10 @@ if __name__ == '__main__':
     cfgs_path = args.cfgs_path
     comp_path = args.comp_path
     target_algo = args.target_algo
-    target_model = args.target_model
+    target_model = os.path.split(topo_path)[-1].split('.')[0]
+    target_config = os.path.split(cfgs_path)[-1].split('.')[0]
     logdirname = args.logdirname
-    tmp_dirname = os.path.join(os.curdir, 'temporary', target_model)
+    tmp_dirname = os.path.join(os.curdir, 'temporary', f"{target_model}_{target_config}")
 
     print("On-Chip Buffer Compression Test Configs")
     print(f"- topology path: {topo_path}")
@@ -39,6 +38,7 @@ if __name__ == '__main__':
     print(f"- compression file: {comp_path}")
     print(f"- target algorithm: {target_algo}")
     print(f"- target model name: {target_model}")
+    print(f"- target configuration: {target_config}")
     print(f"- temporary dirname: {tmp_dirname}")
     print(f"- log directory: {logdirname}\n")
 
