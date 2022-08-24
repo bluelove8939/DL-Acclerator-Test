@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
         os.makedirs(os.path.join(tmp_dirname, 'configs'), exist_ok=True)
 
-        for line in filter(lambda x: target_model in x[0], body):
+        for line in filter(lambda x: target_model in x[0].lower(), body):
             layer_type, layer_idx, _ = line[1].split('_')
             layer_name = f"{layer_type}_{layer_idx}"
 
