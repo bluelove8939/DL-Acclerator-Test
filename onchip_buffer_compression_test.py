@@ -3,7 +3,7 @@ import argparse
 import configparser
 import math
 
-from scalesim.scale_sim import scalesim
+# from scalesim.scale_sim import scalesim
 
 
 parser = argparse.ArgumentParser(description='On-Chip Buffer Compression Test Configs')
@@ -53,8 +53,8 @@ if __name__ == '__main__':
 
     with open(topo_path, 'rt') as topo_file:
         content = topo_file.readlines()
-        header = content[0]
-        body = content[1:]
+        header = content[0].strip()
+        body = list(map(lambda x: x.strip(), content[1:]))
 
         os.makedirs(os.path.join(tmp_dirname, 'layers'), exist_ok=True)
 
@@ -74,14 +74,15 @@ if __name__ == '__main__':
         body = list(map(lambda x: x.split(','), content[1:]))
         aidx = header.index('Comp Ratio(' + target_algo + ')')
 
-        assert aidx == -1
+        assert aidx != -1
 
         os.makedirs(os.path.join(tmp_dirname, 'configs'), exist_ok=True)
 
         for line in filter(lambda x: target_model in x[0], body):
             layer_type, layer_idx, _ = line[1].split('_')
+            layer_name = f"{layer_type}_{layer_idx}"
 
-            if f"{layer_type}_{layer_idx}" not in tmp_config_filepath.keys():
+            if layer_name not in tmp_config_filepath.keys() and layer_name in tmp_layer_filepath.keys():
                 tmpfilepath = os.path.join(tmp_dirname, 'configs', layer_name + '.cfg')
                 tmp_config_filepath[layer_name] = tmpfilepath
 
