@@ -9,7 +9,7 @@ from scalesim.scale_sim import scalesim
 parser = argparse.ArgumentParser(description='On-Chip Buffer Compression Test Configs')
 parser.add_argument('-tp', '--topology', default=os.path.join(os.curdir, 'topologies', 'conv_nets', 'alexnet.csv'), type=str,
                     help='Topology file path', dest='topo_path')
-parser.add_argument('-cf', '--configs', default=os.path.join(os.curdir, 'configs', 'google.cfg'), type=str,
+parser.add_argument('-cf', '--configs', default=os.path.join(os.curdir, 'configs', 'gemmini.cfg'), type=str,
                     help='Accelerator configuration file path', dest='cfgs_path')
 parser.add_argument('-cp', '--compression', default=os.path.join(os.curdir, 'compressions', 'compression_test_final_fp32_64B_pr10.csv'), type=str,
                     help='Compression results file path', dest='comp_path')
@@ -91,13 +91,13 @@ if __name__ == '__main__':
                 ifmap_sramsiz  = int(config['architecture_presets']['IfmapSramSzkB'])
                 filter_sramsiz = int(config['architecture_presets']['FilterSramSzkB'])
                 ofmap_sramsiz  = int(config['architecture_presets']['OfmapSramSzkB'])
-                bandwidth      = int(config['architecture_presets']['Bandwidth'])
+                # bandwidth      = int(config['architecture_presets']['Bandwidth'])
 
                 config['general']['run_name'] = '_'.join([config['general']['run_name'], f"cp_{ratio:.2f}"])
                 config['architecture_presets']['IfmapSramSzkB']  = str(math.floor(ifmap_sramsiz * ratio))
                 config['architecture_presets']['FilterSramSzkB'] = str(math.floor(filter_sramsiz * ratio))
                 config['architecture_presets']['OfmapSramSzkB']  = str(math.floor(ofmap_sramsiz * ratio))
-                config['architecture_presets']['Bandwidth']      = str(math.floor(bandwidth * ratio))
+                # config['architecture_presets']['Bandwidth']      = str(math.floor(bandwidth * ratio))
                 config['run_presets']['InterfaceBandwidth']      = 'USER'
 
                 with open(tmpfilepath, 'wt') as conf_file:
