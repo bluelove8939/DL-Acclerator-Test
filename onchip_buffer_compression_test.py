@@ -115,7 +115,7 @@ if __name__ == '__main__':
 
         os.makedirs(logdirname_s, exist_ok=True)
 
-        s = scalesim(save_disk_space=True, verbose=True,
+        s = scalesim(save_disk_space=False, verbose=True,
                      config=config_file,
                      topology=layer_file,)
 
