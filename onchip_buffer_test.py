@@ -9,7 +9,7 @@ from scalesim.scale_sim import scalesim
 parser = argparse.ArgumentParser(description='On-Chip Buffer Compression Test Configs')
 parser.add_argument('-tp', '--topology', default=os.path.join(os.curdir, 'topologies', 'conv_nets', 'alexnet.csv'), type=str,
                     help='Topology file path', dest='topo_path')
-parser.add_argument('-cf', '--configs', default=os.path.join(os.curdir, 'configs', 'gemmini.cfg'), type=str,
+parser.add_argument('-cf', '--configs', default=os.path.join(os.curdir, 'configs', 'google.cfg'), type=str,
                     help='Accelerator configuration file path', dest='cfgs_path')
 parser.add_argument('-cp', '--compression', default=os.path.join(os.curdir, 'compressions', 'compression_test_final_fp32_64B_pr10.csv'), type=str,
                     help='Compression results file path', dest='comp_path')
